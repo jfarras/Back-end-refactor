@@ -15,6 +15,21 @@ class GildedRose {
         $this->items = $items;
     }
    
+    function update_sell_in($item) {
+        if ($item->name != 'Sulfuras, Hand of Ragnaros')  $item->sell_in--;
+                
+                if ($item->sell_in < 0) {
+                    if ($item->name != 'Aged Brie') {
+                        if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
+                            if ($item->quality > self::QUALITY_MIN and $item->name != 'Sulfuras, Hand of Ragnaros') {
+                                    $item->quality--;
+                            }
+                        } else $item->quality = 0;
+
+                    } else if ($item->quality < self::QUALITY_MAX) $item->quality++;            
+                }    
+        }
+        
     function update_quality() {
         foreach ($this->items as $item) {
 
@@ -29,19 +44,7 @@ class GildedRose {
 
                     }
             }
-            
-            if ($item->name != 'Sulfuras, Hand of Ragnaros')  $item->sell_in--;
-            
-            if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > self::QUALITY_MIN and $item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality--;
-                        }
-                    } else $item->quality = 0;
-
-                } else if ($item->quality < self::QUALITY_MAX) $item->quality++;            
-            }
+            $this->update_sell_in($item);
         }
     }
 }
